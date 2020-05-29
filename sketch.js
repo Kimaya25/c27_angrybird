@@ -1,8 +1,10 @@
+//name spacing of the physics engine equipments
 const Engine = Matter.Engine;
 const World= Matter.World;
 const Bodies = Matter.Bodies;
 const Constraint = Matter.Constraint;
 
+//creating variables
 var engine, world;
 var box1, pig1;
 var backgroundImg,platform;
@@ -13,10 +15,11 @@ function preload() {
 
 function setup(){
     var canvas = createCanvas(1200,400);
+   //creating engine
     engine = Engine.create();
     world = engine.world;
 
-
+   //giving the variables properties 
     ground = new Ground(600,height,1200,20);
     platform = new Ground(150, 305, 300, 170);
 
@@ -36,8 +39,8 @@ function setup(){
     log5 = new Log(870,120,150, -PI/7);
 
     bird = new Bird(100,100);
-    log6 = new Log(200,138,20,PI/2);
-    chain1 = new chain(bird.body,log6.body);
+    //log6 = new Log(200,138,20,PI/2);
+    slingshot1 = new slingshot(bird.body,{x:200,y:150});
 }
 
 function draw(){
@@ -46,6 +49,8 @@ function draw(){
     console.log(box2.body.position.x);
     console.log(box2.body.position.y);
     console.log(box2.body.angle);
+
+    //displaying the variables
     box1.display();
     box2.display();
     ground.display();
@@ -63,6 +68,15 @@ function draw(){
 
     bird.display();
     platform.display();
-    log6.display();
-    chain1.display();
+    //log6.display();
+    slingshot1.display();
 }
+//creating function mouseDragged
+function mouseDragged(){
+  Matter.Body.setPosition(bird.body,{x:mouseX,y:mouseY});
+}
+//creating function mouseReleased
+function mouseReleased(){
+    slingshot1.fly();
+}
+
